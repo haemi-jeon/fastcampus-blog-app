@@ -5,57 +5,12 @@ import { db } from 'firebaseApp';
 import AuthContext from 'context/AuthContext';
 import { toast } from 'react-toastify';
 
-const COMMENTS = [
-	{
-		id: 1,
-		email: 'admin1@blog.com',
-		content: '댓글1',
-		createdAt: '2023-01-13',
-	},
-	{
-		id: 2,
-		email: 'admin2@blog.com',
-		content: '댓글2',
-		createdAt: '2023-01-13',
-	},
-	{
-		id: 3,
-		email: 'admin3@blog.com',
-		content: '댓글3',
-		createdAt: '2023-01-13',
-	},
-	{
-		id: 4,
-		email: 'admin4@blog.com',
-		content: '댓글4',
-		createdAt: '2023-01-13',
-	},
-	{
-		id: 5,
-		email: 'admin5@blog.com',
-		content: '댓글5',
-		createdAt: '2023-01-13',
-	},
-	{
-		id: 6,
-		email: 'admin6@blog.com',
-		content: '댓글6',
-		createdAt: '2023-01-13',
-	},
-	{
-		id: 7,
-		email: 'admin7@blog.com',
-		content: '댓글7',
-		createdAt: '2023-01-13',
-	},
-];
-
 interface CommentProps {
 	post: PostProps;
+	getPost: (id: string) => Promise<void>;
 }
 
-export default function Comments({ post }: CommentProps) {
-	console.log(post);
+export default function Comments({ post, getPost }: CommentProps) {
 	const [comment, setComment] = useState('');
 	const { user } = useContext(AuthContext);
 
@@ -96,6 +51,9 @@ export default function Comments({ post }: CommentProps) {
 							second: '2-digit',
 						}),
 					});
+
+					// 문서 업데이트
+					await getPost(post.id);
 				}
 			}
 			toast.success('댓글을 생성했습니다.');
@@ -124,16 +82,19 @@ export default function Comments({ post }: CommentProps) {
 				</div>
 			</form>
 			<div className="comments__list">
-				{COMMENTS?.map((comment) => (
-					<div className="comment__box" key={comment?.id}>
-						<div className="comment__profile-box">
-							<div className="comment__email">{comment?.email}</div>
-							<div className="comment__date">{comment?.createdAt}</div>
-							<div className="comment__delete">삭제</div>
+				{post?.comments
+					?.slice(0)
+					?.reverse()
+					.map((comment) => (
+						<div className="comment__box" key={comment?.createdAt}>
+							<div className="comment__profile-box">
+								<div className="comment__email">{comment?.email}</div>
+								<div className="comment__date">{comment?.createdAt}</div>
+								<div className="comment__delete">삭제</div>
+							</div>
+							<div className="comment__content">{comment?.content}</div>
 						</div>
-						<div className="comment__content">{comment?.content}</div>
-					</div>
-				))}
+					))}
 			</div>
 		</div>
 	);

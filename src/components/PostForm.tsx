@@ -106,7 +106,7 @@ export default function PostForm() {
 			setTitle(post?.title);
 			setSummary(post?.summary);
 			setContent(post?.content);
-			setCategory(post?.category);
+			setCategory(post?.category as CategoryType);
 		}
 	}, [post]);
 
