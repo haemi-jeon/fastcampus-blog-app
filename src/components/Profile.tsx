@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 
 export default function Profile() {
 	const { user } = useContext(AuthContext);
-	console.log(user);
 
 	const onSignOut = async () => {
 		try {
