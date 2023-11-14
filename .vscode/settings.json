@@ -1,3 +1,9 @@
 {
+	"workbench.colorCustomizations": {
+		"titleBar.activeBackground": "##BD344D",
+		"titleBar.activeForeground": "#ffffff",
+		"titleBar.inactiveBackground": "#BD344D",
+		"titleBar.inactiveForeground": "#ffffff"
+	},
 	"cSpell.ignoreWords": ["Signup", "datas", "setpassword", "toastify"]
 }
